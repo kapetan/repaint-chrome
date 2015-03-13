@@ -38,9 +38,11 @@ var update = function(x, y) {
 	var body = marked(text.value);
 	var html = util.format(DOCUMENT, body);
 
-	doc.open();
-	doc.write(html);
-	doc.close();
+	if(debug) {
+		doc.open();
+		doc.write(html);
+		doc.close();
+	}
 
 	context.clearRect(0, 0, dimensions.width, dimensions.height);
 
