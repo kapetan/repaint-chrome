@@ -1,0 +1,29 @@
+{
+  "name": "render-markdown",
+  "version": "1.0.0",
+  "description": "Render markdown on canvas",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify index.js -t brfs | uglifyjs -c -o bundle.js 2> /dev/null",
+    "watch": "wzrd index.js:bundle.js -- -t brfs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kapetan/render-markdown"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kapetan/render-markdown/issues"
+  },
+  "homepage": "https://github.com/kapetan/render-markdown",
+  "dependencies": {
+    "marked": "^0.3.3",
+    "xhr": "^2.0.1"
+  },
+  "devDependencies": {
+    "brfs": "^1.4.0",
+    "browserify": "^9.0.3",
+    "uglify-js": "^2.4.17",
+    "wzrd": "^1.2.1"
+  }
+}
