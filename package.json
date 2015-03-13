@@ -1,7 +1,7 @@
 {
   "name": "render-markdown",
   "version": "1.0.0",
-  "description": "Render markdown on canvas",
+  "description": "Render markdown on a canvas",
   "main": "index.js",
   "scripts": {
     "build": "browserify index.js -t brfs | uglifyjs -c -o bundle.js 2> /dev/null",
