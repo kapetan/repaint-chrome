@@ -99,8 +99,13 @@ form.addEventListener('submit', function(e) {
 open.addEventListener('click', function(e) {
 	e.preventDefault();
 
-	var url = canvas.toDataURL('image/png');
-	window.open(url);
+	try {
+		var url = canvas.toDataURL('image/png');
+		window.open(url);
+	} catch(err) {
+		var message = err.message + '\n\nThis is probably caused by cross-origin images.';
+		alert(message);
+	}
 });
 
 scroll.addEventListener('input', function() {
