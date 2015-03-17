@@ -1,19 +1,22 @@
 var fs = require('fs');
 var util = require('util');
 var qs = require('querystring');
+var url = require('url');
 
+var handlebars = require('handlebars');
 var marked = require('marked');
 var xhr = require('xhr');
-var render = require('../browser');
+var repaint = require('../browser');
 
 var serialize = require('../browser/test/serialize');
 
 var INITIAL_URL = 'https://raw.githubusercontent.com/kapetan/text-width/master/README.md';
 var CORS_URL = 'http://cors.maxogden.com';
-var DOCUMENT = fs.readFileSync(__dirname + '/document.html', 'utf-8');
+
+var content = handlebars.compile(fs.readFileSync(__dirname + '/document.html', 'utf-8'));
 
 var form = document.getElementById('text-form');
-var input = document.getElementById('text-input');
+var address = document.getElementById('text-address');
 var open = document.getElementById('open-png');
 var scroll = document.getElementById('scroll');
 var text = document.getElementById('text');
@@ -34,9 +37,41 @@ var dimensions = {
 canvas.width = dimensions.width;
 canvas.height = dimensions.height;
 
+var urlType = function(url) {
+	var extension = url
+		.split('.')
+		.pop()
+		.toLowerCase();
+
+	return {
+		md: 'markdown',
+		markdown: 'markdown'
+	}[extension] || 'html';
+};
+
+var resolve = function(name) {
+	return url.resolve('' + window.location, name);
+};
+
 var update = function(x, y) {
-	var body = marked(text.value);
-	var html = util.format(DOCUMENT, body);
+	var url = address.value.trim();
+	var body = text.value;
+	var html = content({
+		body: body,
+		stylesheets: [resolve('default.css')]
+	});
+
+	if(urlType(url) === 'markdown') {
+		body = marked(text.value);
+		body = util.format('<div class="markdown-body">%s</div>', body);
+		html = content({
+			body: body,
+			stylesheets: [
+				resolve('default.css'),
+				resolve('github.css')
+			]
+		});
+	}
 
 	if(debug) {
 		doc.open();
@@ -46,8 +81,8 @@ var update = function(x, y) {
 
 	context.clearRect(0, 0, dimensions.width, dimensions.height);
 
-	render({
-		url: '' + window.location,
+	repaint({
+		url: url,
 		content: html,
 		context: context,
 		viewport: {
@@ -55,13 +90,13 @@ var update = function(x, y) {
 			dimensions: dimensions
 		}
 	}, function(err, page) {
-		if(err) throw err;
+		if(err) return alert(err.message);
 		if(debug) console.log(serialize(page.layout));
 	});
 };
 
 var fetch = function() {
-	var url = input.value.trim();
+	var url = address.value.trim();
 	if(!url) return;
 
 	xhr({
@@ -79,7 +114,7 @@ var fetch = function() {
 	});
 };
 
-input.value = query.url || INITIAL_URL;
+address.value = query.url || INITIAL_URL;
 fetch();
 
 var textTimeout, scrollTimeout;

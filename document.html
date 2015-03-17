@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Markdown</title>
+	<title>Document</title>
 
-	<link rel="stylesheet" type="text/css" href="default.css">
-	<link rel="stylesheet" type="text/css" href="github.css">
+	{{#each stylesheets}}
+		<link rel="stylesheet" type="text/css" href="{{this}}">
+	{{/each}}
 </head>
 <body>
-	<div class="markdown-body">
-		%s
-	</div>
+	{{{body}}}
 </body>
 </html>

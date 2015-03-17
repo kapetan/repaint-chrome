@@ -1,3 +1,3 @@
-# render-markdown
+# repaint-chrome
 
-Renders markdown on a canvas using javascript HTML rendering engine. See the live [demo](http://kapetan.github.io/render-markdown).
+Simple interface for [repaint](https://github.com/kapetan/repaint) layout engine. Supports rendering HTML and markdown. See the live [demo](http://kapetan.github.io/repaint-chrome).

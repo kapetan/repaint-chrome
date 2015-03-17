@@ -1,7 +1,7 @@
 {
-  "name": "render-markdown",
+  "name": "repaint-chrome",
   "version": "1.0.0",
-  "description": "Render markdown on a canvas",
+  "description": "Simple interface for repaint",
   "main": "index.js",
   "scripts": {
     "build": "browserify index.js -t brfs | uglifyjs -c -o bundle.js 2> /dev/null",
@@ -9,14 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kapetan/render-markdown"
+    "url": "https://github.com/kapetan/repaint-chrome"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kapetan/render-markdown/issues"
+    "url": "https://github.com/kapetan/repaint-chrome/issues"
   },
-  "homepage": "https://github.com/kapetan/render-markdown",
+  "homepage": "https://github.com/kapetan/repaint-chrome",
   "dependencies": {
+    "handlebars": "^3.0.0",
     "marked": "^0.3.3",
     "xhr": "^2.0.1"
   },
