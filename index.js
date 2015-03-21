@@ -8,12 +8,10 @@ var marked = require('marked');
 var xhr = require('xhr');
 var repaint = require('../browser');
 
-var serialize = require('../browser/test/serialize');
-
 var INITIAL_URL = 'https://raw.githubusercontent.com/kapetan/text-width/master/README.md';
 var CORS_URL = 'http://cors.maxogden.com';
 
-var content = handlebars.compile(fs.readFileSync(__dirname + '/document.html', 'utf-8'));
+var markdown = handlebars.compile(fs.readFileSync(__dirname + '/markdown/index.html', 'utf-8'));
 
 var form = document.getElementById('text-form');
 var address = document.getElementById('text-address');
@@ -38,6 +36,12 @@ canvas.width = dimensions.width;
 canvas.height = dimensions.height;
 
 var urlType = function(url) {
+	// var wikiUrl = url.resolve('' + window.location, '/wiki/index.html');
+	// if(u.indexOf(wikiUrl) === 0) return 'wiki';
+	url = resolve(url);
+	var wikiUrl = resolve('/wiki/index.html');
+	if(url.indexOf(wikiUrl) === 0) return 'wiki';
+
 	var extension = url
 		.split('.')
 		.pop()
@@ -49,27 +53,29 @@ var urlType = function(url) {
 	}[extension] || 'html';
 };
 
-var resolve = function(name) {
-	return url.resolve('' + window.location, name);
+var baseUrl = function() {
+	return resolve('/').slice(0, -1);
+};
+
+var resolve = function(path) {
+	return url.resolve('' + window.location, path);
 };
 
 var update = function(x, y) {
 	var url = address.value.trim();
 	var body = text.value;
-	var html = content({
-		body: body,
-		stylesheets: [resolve('default.css')]
-	});
+	var html = body;
+	var type = urlType(url);
 
-	if(urlType(url) === 'markdown') {
+	if(type === 'wiki') {
+		html = handlebars.compile(body)({
+			base: baseUrl()
+		});
+	} else if(type === 'markdown') {
 		body = marked(text.value);
-		body = util.format('<div class="markdown-body">%s</div>', body);
-		html = content({
+		html = markdown({
 			body: body,
-			stylesheets: [
-				resolve('default.css'),
-				resolve('github.css')
-			]
+			base: baseUrl()
 		});
 	}
 
@@ -91,17 +97,17 @@ var update = function(x, y) {
 		}
 	}, function(err, page) {
 		if(err) return alert(err.message);
-		if(debug) console.log(serialize(page.layout));
 	});
 };
 
 var fetch = function() {
 	var url = address.value.trim();
 	if(!url) return;
+	if(/https?:/.test(url)) url = CORS_URL + '/' + encodeURI(url);
 
 	xhr({
 		method: 'GET',
-		url: CORS_URL + '/' + encodeURI(url)
+		url: url
 	}, function(err, response, body) {
 		if(err) return alert(err.message);
 		if(!/2\d\d/.test(response.statusCode)) {
