@@ -36,8 +36,6 @@ canvas.width = dimensions.width;
 canvas.height = dimensions.height;
 
 var urlType = function(url) {
-	// var wikiUrl = url.resolve('' + window.location, '/wiki/index.html');
-	// if(u.indexOf(wikiUrl) === 0) return 'wiki';
 	url = resolve(url);
 	var wikiUrl = resolve('/wiki/index.html');
 	if(url.indexOf(wikiUrl) === 0) return 'wiki';
