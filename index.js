@@ -6,7 +6,7 @@ var url = require('url');
 var handlebars = require('handlebars');
 var marked = require('marked');
 var xhr = require('xhr');
-var repaint = require('../browser');
+var repaint = require('repaint');
 
 var CORS_URL = 'http://cors.maxogden.com';
 

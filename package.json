@@ -19,6 +19,7 @@
   "dependencies": {
     "handlebars": "^3.0.0",
     "marked": "^0.3.3",
+    "repaint": "0.0.2",
     "xhr": "^2.0.1"
   },
   "devDependencies": {
