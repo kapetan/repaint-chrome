@@ -1,7 +1,6 @@
 var fs = require('fs');
 var util = require('util');
 var qs = require('querystring');
-var url = require('url');
 
 var handlebars = require('handlebars');
 var marked = require('marked');
@@ -48,7 +47,8 @@ var urlType = function(url) {
 };
 
 var baseUrl = function() {
-	return url.resolve('' + window.location, '/').slice(0, -1);
+	var loc = window.location;
+	return util.format('%s//%s%s', loc.protocol, loc.host, loc.pathname).replace(/\/$/, '');
 };
 
 var update = function(x, y) {
