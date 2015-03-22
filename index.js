@@ -8,7 +8,6 @@ var marked = require('marked');
 var xhr = require('xhr');
 var repaint = require('../browser');
 
-var INITIAL_URL = 'https://raw.githubusercontent.com/kapetan/text-width/master/README.md';
 var CORS_URL = 'http://cors.maxogden.com';
 
 var markdown = handlebars.compile(fs.readFileSync(__dirname + '/markdown/index.html', 'utf-8'));
@@ -113,8 +112,10 @@ var fetch = function() {
 	});
 };
 
-address.value = query.url || INITIAL_URL;
-fetch();
+if(query.url) {
+	address.value = query.url;
+	fetch();
+}
 
 var textTimeout, scrollTimeout;
 
