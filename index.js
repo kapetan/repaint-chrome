@@ -37,10 +37,6 @@ canvas.width = dimensions.width;
 canvas.height = dimensions.height;
 
 var urlType = function(url) {
-	url = resolve(url);
-	var wikiUrl = resolve('/wiki/index.html');
-	if(url.indexOf(wikiUrl) === 0) return 'wiki';
-
 	var extension = url
 		.split('.')
 		.pop()
@@ -53,24 +49,15 @@ var urlType = function(url) {
 };
 
 var baseUrl = function() {
-	return resolve('/').slice(0, -1);
-};
-
-var resolve = function(path) {
-	return url.resolve('' + window.location, path);
+	return url.resolve('' + window.location, '/').slice(0, -1);
 };
 
 var update = function(x, y) {
 	var url = address.value.trim();
 	var body = text.value;
 	var html = body;
-	var type = urlType(url);
 
-	if(type === 'wiki') {
-		html = handlebars.compile(body)({
-			base: baseUrl()
-		});
-	} else if(type === 'markdown') {
+	if(urlType(url) === 'markdown') {
 		body = marked(text.value);
 		html = markdown({
 			body: body,
