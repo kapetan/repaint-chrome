@@ -24,6 +24,7 @@ var query = qs.parse(window.location.search.slice(1));
 var context = canvas.getContext('2d');
 var doc = frame.contentWindow.document;
 var debug = query.hasOwnProperty('debug');
+var height = 0;
 
 if(debug) document.getElementById('frame-row').style.display = 'block';
 
@@ -95,6 +96,13 @@ var update = function(x, y) {
 		}
 	}, function(err, page) {
 		if(err) return alert(err.message);
+
+		var layoutHeight = page.layout.visibleHeight();
+		if(Math.abs(layoutHeight - height) > 1) {
+			height = layoutHeight;
+			scroll.value = 0;
+			scroll.max = layoutHeight - dimensions.height;
+		}
 	});
 };
 
