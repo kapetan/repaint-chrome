@@ -4,8 +4,11 @@
   "description": "Simple interface for repaint",
   "main": "index.js",
   "scripts": {
-    "build": "browserify index.js -t brfs | uglifyjs -c -o bundle.js 2> /dev/null",
-    "watch": "wzrd index.js:bundle.js -- -t brfs"
+    "build-css": "cp node_modules/github-markdown-css/github-markdown.css markdown/index.css",
+    "build-js": "browserify index.js -t brfs | uglifyjs -c -o bundle.js 2> /dev/null",
+    "watch-js": "wzrd index.js:bundle.js -- -t brfs",
+    "build": "npm run build-css && npm run build-js",
+    "watch": "npm run build-css && npm run watch-js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +20,10 @@
   },
   "homepage": "https://github.com/kapetan/repaint-chrome",
   "dependencies": {
+    "github-markdown-css": "^2.0.7",
     "handlebars": "^3.0.0",
     "marked": "^0.3.3",
-    "repaint": "0.0.2",
+    "repaint": "0.0.7",
     "xhr": "^2.0.1"
   },
   "devDependencies": {
