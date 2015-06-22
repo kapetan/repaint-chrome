@@ -7,7 +7,7 @@ var marked = require('marked');
 var xhr = require('xhr');
 var repaint = require('repaint');
 
-var CORS_URL = 'http://cors.maxogden.com';
+var CORS_URL = 'http://crossorigin.me';
 
 var markdown = handlebars.compile(fs.readFileSync(__dirname + '/markdown/index.html', 'utf-8'));
 
