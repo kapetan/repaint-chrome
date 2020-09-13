@@ -7,8 +7,6 @@ var marked = require('marked');
 var xhr = require('xhr');
 var repaint = require('repaint');
 
-var CORS_URL = 'http://crossorigin.me';
-
 var markdown = handlebars.compile(fs.readFileSync(__dirname + '/markdown/index.html', 'utf-8'));
 
 var form = document.getElementById('text-form');
@@ -23,6 +21,7 @@ var context = canvas.getContext('2d');
 var doc = frame.contentWindow.document;
 var debug = query.hasOwnProperty('debug');
 var height = 0;
+var dpr = window.devicePixelRatio || 1;
 
 if(debug) document.getElementById('frame-row').style.display = 'block';
 
@@ -31,8 +30,9 @@ var dimensions = {
 	height: canvas.clientHeight
 };
 
-canvas.width = dimensions.width;
-canvas.height = dimensions.height;
+canvas.width = dimensions.width * dpr;
+canvas.height = dimensions.height * dpr;
+context.scale(dpr, dpr);
 
 var urlType = function(url) {
 	var extension = url
@@ -95,7 +95,6 @@ var update = function(x, y) {
 var fetch = function() {
 	var url = address.value.trim();
 	if(!url) return;
-	if(/https?:/.test(url)) url = CORS_URL + '/' + encodeURI(url);
 
 	xhr({
 		method: 'GET',
@@ -136,7 +135,10 @@ open.addEventListener('click', function(e) {
 
 	try {
 		var url = canvas.toDataURL('image/png');
-		window.open(url);
+		var html = '<iframe style="border:none; width: 100%; height: 100%;" src="' + url + '"></iframe>';
+		var w = window.open();
+		w.document.write(html);
+		w.document.close();
 	} catch(err) {
 		var message = err.message + '\n\nThis is probably caused by cross-origin images.';
 		alert(message);

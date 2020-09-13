@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build-css": "cp node_modules/github-markdown-css/github-markdown.css markdown/index.css",
-    "build-js": "browserify index.js -t brfs | uglifyjs -c -o bundle.js 2> /dev/null",
+    "build-js": "browserify index.js -t brfs -o bundle.js",
     "watch-js": "wzrd index.js:bundle.js -- -t brfs",
     "build": "npm run build-css && npm run build-js",
     "watch": "npm run build-css && npm run watch-js"
@@ -20,16 +20,15 @@
   },
   "homepage": "https://github.com/kapetan/repaint-chrome",
   "dependencies": {
-    "github-markdown-css": "^2.0.7",
-    "handlebars": "^3.0.0",
-    "marked": "^0.3.3",
-    "repaint": "0.0.9",
-    "xhr": "^2.0.1"
+    "github-markdown-css": "^4.0.0",
+    "handlebars": "^4.7.6",
+    "marked": "^1.1.1",
+    "repaint": "0.0.11",
+    "xhr": "^2.5.0"
   },
   "devDependencies": {
-    "brfs": "^1.4.0",
-    "browserify": "^9.0.3",
-    "uglify-js": "^2.4.17",
-    "wzrd": "^1.2.1"
+    "brfs": "^2.0.2",
+    "browserify": "^16.5.2",
+    "wzrd": "^1.5.0"
   }
 }
