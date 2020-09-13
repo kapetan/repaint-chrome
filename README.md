@@ -12,7 +12,7 @@ Rendering markdown and plain HTML.
 - [mafintosh/peerflix][pf] README.md
 - [Marcus Tullius Tiro][wiki] Wikipedia mobile page. It's not possible to render arbitrary wikipedia pages since `repaint` doesn't support CSS shorthand properties.
 
-[rc]: http://kapetan.github.io/repaint-chrome
-[tw]: http://kapetan.github.io/repaint-chrome/examples/text-width.html
-[pf]: http://kapetan.github.io/repaint-chrome/examples/peerflix.html
-[wiki]: http://kapetan.github.io/repaint-chrome/examples/wiki.html
+[rc]: https://kapetan.github.io/repaint-chrome
+[tw]: https://kapetan.github.io/repaint-chrome/examples/text-width.html
+[pf]: https://kapetan.github.io/repaint-chrome/examples/peerflix.html
+[wiki]: https://kapetan.github.io/repaint-chrome/examples/wiki.html
