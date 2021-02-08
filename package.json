@@ -22,7 +22,7 @@
   "dependencies": {
     "github-markdown-css": "^4.0.0",
     "handlebars": "^4.7.6",
-    "marked": "^1.1.1",
+    "marked": "^2.0.0",
     "repaint": "0.0.11",
     "xhr": "^2.5.0"
   },
